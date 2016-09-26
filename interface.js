@@ -13,7 +13,7 @@ function interface(name, methods) {
         return interface.interfaces[name]
     } 
     
-
+//dsdsd
     if (!methods) {
         throw new Error("methods does not define");
     }
