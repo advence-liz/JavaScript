@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Color Martixs</title>
+</head>
+<script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+<!--<script src="./js/martix.js"></script>-->
+
+<style>
+
+  .first-face {
+     display: flex;
+     justify-content: center;
+     align-items: center
+      }
+
+  .second-face {  
+    display: flex;
+    justify-content: space-between;
+   }
+
+  .second-face .pip:nth-of-type(2) {
+  align-self: flex-end;
+  }
+
+ .third-face {
+  display: flex;
+  justify-content: space-between;
+ }
+  
+ .third-face .pip:nth-of-type(2) {  
+  align-self: center;
+ }
+
+ .third-face .pip:nth-of-type(3) {
+  align-self: flex-end;
+ }
+
+ .fourth-face, .sixth-face {
+  display: flex;
+  justify-content: space-between;
+ }
+
+ .fourth-face .column, .sixth-face .column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+ }
+
+ .fifth-face {
+  display: flex;
+  justify-content: space-between;
+}
+  
+ .fifth-face .column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+  
+ .fifth-face .column:nth-of-type(2) {
+  justify-content: center;
+}
+
+/* OTHER STYLES */
+
+* {
+  box-sizing: border-box;
+}
+
+
+
+[class$="face"] {
+
+  margin: 16px;
+  padding: 4px;
+  
+  background-color: #e7e7e7;
+  width: 104px;
+  height: 104px;
+  object-fit: contain;
+  
+  box-shadow:
+    inset 0 5px white, 
+    inset 0 -5px #bbb,
+    inset 5px 0 #d7d7d7, 
+    inset -5px 0 #d7d7d7;
+  
+  border-radius: 10%;
+}
+
+.pip {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin: 4px;
+
+  background-color: #333;
+  box-shadow: inset 0 3px #111, inset 0 -3px #555;
+}
+</style>
+
+<body>
+
+  <section id="content" style="display: flex; flex-wrap: wrap;margin: 0 50px;">
+
+</section>
+</body>
+<script type="text/javascript">
+  var randomerMaker = (Min, Max) => {
+    var Range = Max - Min;
+    var Rand = Math.random();
+    return (Min + Math.round(Rand * Range));
+  };
+  var randomerMaker = randomerMaker.bind(null, 1, 6);
+  var dice_arr = [];
+  for (var i = 0; i < 1024; i++) {
+    dice_arr.push(randomerMaker());
+  }
+ 
+  function Dice(index) {
+    return Dice.templateEnum[index];
+  }
+  Dice.templateEnum = {
+    1: '<div class="first-face"><span class="pip"></span></div>',
+    2: '<div class="second-face"><span class="pip"></span><span class="pip"></span></div>',
+    3: '<div class="third-face"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>',
+    4: '<div class="fourth-face"><div class="column"><span class="pip"></span><span class="pip"></span></div><div class="column"><span class="pip"></span><span class="pip"></span></div></div>',
+    5: '<div class="fifth-face"><div class="column"><span class="pip"></span><span class="pip"></span></div><div class="column"><span class="pip"></span></div><div class="column"><span class="pip"></span><span class="pip"></span></div></div>',
+    6: '<div class="sixth-face"><div class="column"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div><div class="column"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div></div>'
+  }
+
+var content=$("#content");
+var template_str="";
+var countEnum={
+  1:0,2:0,3:0,4:0,5:0,6:0
+}
+ dice_arr.map(function (index) {
+    countEnum[index]++;
+    template_str+= Dice(index);
+    return index;
+  })
+  console.dir(countEnum);
+  content.append(template_str);
+</script>
+
+</html>

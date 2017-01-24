@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="utf-8" />
+	<title>slect</title>
+	<link href="../dist/css/jquery-ui.css" rel="stylesheet" />
+	<link href="../dist/css/bootstrap.css" rel="stylesheet" />
+	<link href="../dist/css/widget.css" rel="stylesheet" />
+	<script src="../dist/js/jquery.js"></script>
+	<script src="../dist/js/jquery-ui.js"></script>
+	<script src="../dist/js/angular.js"></script>
+	<!--<script src="../dist/js/widget.js"></script>-->
+	<!--<script src="js/select.js"></script>-->
+	<!--jQuery.event.special[youEvent] = {
+        /**
+         * 初始化事件处理器 - this指向元素
+         * @param 附加的数据
+         * @param 事件类型命名空间
+         * @param 回调函数
+         */
+        setup: function (data, namespaces, eventHandle) {
+            当返回值为 false（===）不添加原生的 Eventlistener
+        },
+        /**
+         * 卸载事件处理器 - this指向元素
+         * @param 事件类型命名空间
+         */
+        teardown: function (namespaces) {
+        },
+		/**
+		 *@param handleObj
+		 */
+		 add: function (handleObj){
+              在这里可以修改handelObj 的handel 函数（一般也就是跟在handle 外加一个闭包，向handle 传入特定的参数） 
+		 }
+};-->
+
+	<style>
+
+	</style>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<p>$ event specify</p>
+		<a href="http://www.phpchina.com/thread-221206-1-1.html">参考链接</a>
+
+		<button type="button" id="btn" class="btn btn-default">改变items</button>
+		<button type="button" id="btn1" class="btn btn-default">改变selectedIndex</button>
+	</div>
+	<script>
+       //a demo from jquery resize plugins
+        $.event.special["demo"] = {
+
+	        // Called only when the first 'resize' event callback is bound per element.
+	        setup: function () {
+	            // Since window has its own native 'resize' event, return false so that
+	            // jQuery will bind the event using DOM methods. Since only 'window'
+	            // objects have a .setTimeout method, this should be a sufficient test.
+	            // Unless, of course, we're throttling the 'resize' event for window.
+	            if (!jq_resize[str_throttle] && this[str_setTimeout]) {
+	                return false;
+	            }
+
+	            var elem = $(this);
+
+	            // Add this element to the list of internal elements to monitor.
+	            elems = elems.add(elem);
+
+	            // Initialize data store on the element.
+	            $.data(this, str_data, {
+	                w: elem.width(),
+	                h: elem.height()
+	            });
+
+	            // If this is the first element added, start the polling loop.
+	            if (elems.length === 1) {
+	                loopy();
+	            }
+	        },
+	        // Called only when the last 'resize' event callback is unbound per element.
+	        teardown: function () {
+	            // Since window has its own native 'resize' event, return false so that
+	            // jQuery will unbind the event using DOM methods. Since only 'window'
+	            // objects have a .setTimeout method, this should be a sufficient test.
+	            // Unless, of course, we're throttling the 'resize' event for window.
+	            if (!jq_resize[str_throttle] && this[str_setTimeout]) {
+	                return false;
+	            }
+
+	            var elem = $(this);
+
+	            // Remove this element from the list of internal elements to monitor.
+	            elems = elems.not(elem);
+
+	            // Remove any data stored on the element.
+	            elem.removeData(str_data);
+
+	            // If this is the last element removed, stop the polling loop.
+	            if (!elems.length) {
+	                clearTimeout(timeout_id);
+	            }
+	        },
+	        // Called every time a 'resize' event callback is bound per element (new in
+	        // jQuery 1.4).
+	        add: function (handleObj) {
+	            // Since window has its own native 'resize' event, return false so that
+	            // jQuery doesn't modify the event object. Unless, of course, we're
+	            // throttling the 'resize' event for window.
+	            if (!jq_resize[str_throttle] && this[str_setTimeout]) {
+	                return false;
+	            }
+
+	            var old_handler;
+
+	            // The new_handler function is executed every time the event is triggered.
+	            // This is used to update the internal element data store with the width
+	            // and height when the event is triggered manually, to avoid double-firing
+	            // of the event callback. See the "Double firing issue in jQuery 1.3.2"
+	            // comments above for more information.
+
+	            function new_handler(e, w, h) {
+	                var elem = $(this), data = $.data(this, str_data);
+
+	                // If called from the polling loop, w and h will be passed in as
+	                // arguments. If called manually, via .trigger( 'resize' ) or .resize(),
+	                // those values will need to be computed.
+	                data.w = w !== undefined ? w : elem.width();
+	                data.h = h !== undefined ? h : elem.height();
+
+	                old_handler.apply(this, arguments);
+	            };
+
+	            // This may seem a little complicated, but it normalizes the special event
+	            // .add method between jQuery 1.4/1.4.1 and 1.4.2+
+	            if ($.isFunction(handleObj)) {
+	                // 1.4, 1.4.1
+	                old_handler = handleObj;
+	                return new_handler;
+	            } else {
+	                // 1.4.2+
+	                old_handler = handleObj.handler;
+	                handleObj.handler = new_handler;
+	            }
+	        }
+	    };
+
+
+        $.event.special['liz']={
+              
+             setup: function (data, namespaces, eventHandle) {
+                   var elem = $(this);
+				   elem.addClass("liz");
+				   return true;
+         },
+		    add: function(handleObj){
+				debugger;
+			}
+
+        }
+        var btn=$("#btn");
+        btn.on('liz',function(){
+			alert("eeee");
+		});
+
+    </script>
+</body>
+
+</html>
