@@ -15,7 +15,7 @@ String.prototype.format = function (args) {
         else {
             for (var i = 0; i < arguments.length; i++) {
                 if (arguments[i] != undefined) {
-                    //var reg = new RegExp("({[" + i + "]})", "g");//Õâ¸öÔÚË÷Òý´óÓÚ9Ê±»áÓÐÎÊÌâ£¬Ð»Ð»ºÎÒÔóÏóïµÄÖ¸³ö
+                    //var reg = new RegExp("({[" + i + "]})", "g");//Ã•Ã¢Â¸Ã¶Ã”ÃšÃ‹Ã·Ã’Ã½Â´Ã³Ã“Ãš9ÃŠÂ±Â»Ã¡Ã“ÃÃŽÃŠÃŒÃ¢Â£Â¬ÃÂ»ÃÂ»ÂºÃŽÃ’Ã”Ã³ÃÃ³Ã¯ÂµÃ„Ã–Â¸Â³Ã¶
                     var reg = new RegExp("({)" + i + "(})", "g");
                     result = result.replace(reg, arguments[i]);
                 }
@@ -23,16 +23,16 @@ String.prototype.format = function (args) {
         }
     }
     return result;
-    //Á½ÖÖµ÷ÓÃ·½Ê½
-    //var template1 = "ÎÒÊÇ{0}£¬½ñÄê{1}ÁË";
-    //var template2 = "ÎÒÊÇ{name}£¬½ñÄê{age}ÁË";
+    //ÃÂ½Ã–Ã–ÂµÃ·Ã“ÃƒÂ·Â½ÃŠÂ½
+    //var template1 = "ÃŽÃ’ÃŠÃ‡{0}Â£Â¬Â½Ã±Ã„Ãª{1}ÃÃ‹";
+    //var template2 = "ÃŽÃ’ÃŠÃ‡{name}Â£Â¬Â½Ã±Ã„Ãª{age}ÃÃ‹";
     //var result1 = template1.format("loogn", 22);
     //var result2 = template2.format({ name: "loogn", age: 22 });
 
 };
-///
+// type ,print ,decomplie
 (function (liz) {
-    liz.List = List;
+   
     liz.type = function is(obj, type) {
         if (type) {
             var clas = Object.prototype.toString.call(obj).slice(8, -1);
@@ -54,8 +54,48 @@ String.prototype.format = function (args) {
         var tmpFunction = Function(functionStr);
         return tmpFunction();
     }
-// List
-    function List() {
+
+})(window.liz);
+
++function(liz){
+
+liz.interface=function interface(name, methods) {
+    if (!interface.interfaces) {
+        interface.interfaces = [];
+    }
+    else if (interface.interfaces[name]) {
+        return interface.interfaces[name]
+    } 
+    
+
+    if (!methods) {
+        throw new Error("methods does not define");
+    }
+    function instance() {
+
+    }
+
+    for (var i=0, max = methods.length; i < max; i++) {
+        var consturctStr, funName = methods[i];
+        if (typeof (funName) == "string") {
+            consturctStr = "throw new Error('" + methods[i] + "must override')";
+            instance.prototype[funName] = decompile(consturctStr);
+        }
+    }
+    var result = new instance();
+   
+    interface.interfaces.push(result);
+    return result;
+
+
+}
+}(window.liz);
+
+//List
+(function(liz){
+
+
+ liz.List = function List() {
         this.listSize = 0;
         this.pos = 0;
         this.dataStore = [];
@@ -129,11 +169,9 @@ String.prototype.format = function (args) {
     function currPos() { };
     function monveTo() { };
     function getElement() { };
-
-
 })(window.liz);
 //
-
+//stack
 (function (liz) {
     liz.Stack = Stack;
     function Stack() {
@@ -162,6 +200,53 @@ String.prototype.format = function (args) {
         this.top = 0;
     }
 })(window.liz);
++function(liz){
+var decompile = function (str) {
+    var functionStr = str;
+    var tmpFunction = Function(functionStr);
+    return tmpFunction;
+}
+
+liz.interface=function interface(name, methods) {
+    if (!interface.interfaces) {//ç¼“å­˜interface å®šä¹‰
+        interface.interfaces = [];
+    }
+    else if (interface.interfaces[name]) {//å¦‚æžœå·²ç»å®šä¹‰è¿‡ç›´æŽ¥è¿”å›ž
+        return interface.interfaces[name]
+    } 
+    
+
+    if (!methods) {
+        throw new Error("methods does not define");
+    }
+    function instance() {
+
+    }
+
+    for (var i=0, max = methods.length; i < max; i++) {//åœ¨è¦è¿”å›žçš„inastce ä¸­æ·»åŠ interface ä¸­å®šä¹‰çš„method
+        var consturctStr, funName = methods[i];
+        if (typeof (funName) == "string") {
+            consturctStr = "throw new Error('" + methods[i] + "must override')";
+            instance.prototype[funName] = decompile(consturctStr);
+        }
+    }
+    var result = new instance();
+   
+    interface.interfaces.push(result);
+    return result;
+
+
+}
+}(window.liz);
+//child inherit  interface person
+liz.interface('person',['say','run']);
+function Child(){
+this.say=function(){};
+this.run=function(){};
+}
+child.prototype=liz.interface['person'];
+var child=new Child;
+
 
 with (window.liz) {
     var names = new List();
