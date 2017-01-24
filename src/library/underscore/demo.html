@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="utf-8" />
+    <base target="_blank">
+    <title>underscore</title>
+	<link href="../dist/css/jquery-ui.css" rel="stylesheet" />
+	<link href="../dist/css/bootstrap.css" rel="stylesheet" />
+	<link href="../dist/css/widget.css" rel="stylesheet" />
+	<script src="../dist/js/jquery.js"></script>
+	<!--<script src="../dist/js/jquery-ui.js"></script>
+	<script src="../dist/js/angular.js"></script>-->
+	<!-- <script src="./underscore.js"></script> -->
+	<script src="./debounce.js"></script>
+
+	<style>
+
+	</style>
+</head>
+
+<body>
+    <h1>underscore</h1>
+	<div class="container-fluid">
+		<p></p>
+		<a href="http://www.css88.com/doc/underscore/">underscore API</a>
+		<a href="http://www.cnblogs.com/human/p/3273616.html">source code</a>
+		 <div></div>
+		<button type="button" id="btn" class="btn btn-default">改变items</button>
+		<button type="button" id="btn1" class="btn btn-default">改变selectedIndex</button>
+	</div>
+	<script>
+// escape:/<%-([\s\S]+?)%>/g
+// evaluate:/<%([\s\S]+?)%>/g
+// // interpolate:/<%=([\s\S]+?)%>/g
+ function fun(){
+	console.log(Date.now());
+ }
+//  var lazy=_.debounce(fun,300)
+//  $(window).resize(lazy);
+
+var lazy=debounce(fun,300)
+  $(window).resize(lazy);
+     
+    </script>
+</body>
+
+</html>
