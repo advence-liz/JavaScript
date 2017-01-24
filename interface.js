@@ -14,7 +14,7 @@ liz.interface=function interface(name, methods) {
         return interface.interfaces[name]
     } 
     
-
+//dsdsd
     if (!methods) {
         throw new Error("methods does not define");
     }
@@ -36,6 +36,7 @@ liz.interface=function interface(name, methods) {
 
 
 }
+
 }(window.liz);
 //child inherit  interface person
 liz.interface('person',['say','run']);
