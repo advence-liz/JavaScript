@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <script src="http://cdn.bootcss.com/jquery/3.0.0/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1>XSS TEST</h1>
+        <hr/>
+        <section>
+            <h2>A TAG embed script</h2>
+            <a href="javascript:alert(1)">xss A</a>
+        </section>
+        <section>
+            <h2> innerHTML embed script</h2>
+            <p>使用innerHTML API 插入的 script 节点并不会执行</p>
+            <button id="insertBtn">insert script with innerHTML</button>
+        </section>
+
+
+    </div>
+    <div id="scriptContainer">
+        script Container
+    </div>
+    <script>
+        var scriptContainer = document.getElementById("scriptContainer");
+        $('#insertBtn').click(function () {
+            scriptContainer.innerHTML = '<script>alert(1)<\/script>';
+        })
+    </script>
+    <script>
+        alert(1)
+    </script>
+</body>
+
+</html>
