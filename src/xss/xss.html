@@ -18,14 +18,21 @@
         <hr/>
         <section>
             <h2>A TAG embed script</h2>
-            <a href="javascript:alert(1)">xss A</a>
+            <a href="javascript:alert('hrefxss')">xss A</a>
         </section>
         <section>
             <h2> innerHTML embed script</h2>
             <p>使用innerHTML API 插入的 script 节点并不会执行</p>
             <button id="insertBtn">insert script with innerHTML</button>
         </section>
-
+         <section>
+            <h2>image onerror</h2>
+           <img src=# onerror="alert('image error')"/>
+        </section>
+        <section>
+            <h2>转义字符转为tag</h2>
+           <input type="button" id="exec_btn" value="exec" onclick="document.write('&lt;img src= @ onerror=alert(123) /&gt;')"/>
+        </section>
 
     </div>
     <div id="scriptContainer">
@@ -37,9 +44,9 @@
             scriptContainer.innerHTML = '<script>alert(1)<\/script>';
         })
     </script>
-    <script>
+    <!--<script>
         alert(1)
-    </script>
+    </script>-->
 </body>
 
 </html>

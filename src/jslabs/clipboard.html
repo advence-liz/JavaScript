@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <script src="http://cdn.bootcss.com/jquery/3.0.0/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1>XSS TEST</h1>
+        <hr/>
+        <section id="message">
+            dddddddddddddddd
+        </section>
+   <input type="file" name="pic" accept="image/gif" value="D:\lizgit\nodecmd\pic\saber.gif" />
+
+    </div>
+    <div id="scriptContainer">
+        script Container
+    </div>
+    <script>
+        // $(document.body).bind({
+        //     // copy: function (e) {//copy事件  
+        //     //     var cpTxt = "复制的数据";
+        //     //     var clipboardData = window.clipboardData; //for IE  
+        //     //     if (!clipboardData) { // for chrome  
+        //     //         clipboardData = e.originalEvent.clipboardData;
+        //     //     }
+        //     //     //e.clipboardData.getData('text');//可以获取用户选中复制的数据  
+        //     //     clipboardData.setData('Text', cpTxt);
+        //     //     clipboardData.setData('dd', 'eeee');
+        //     //     alert(cpTxt);
+        //     //     $('#message').text('Copy Data : ' + cpTxt);
+        //     //     return false;//否则设不生效  
+        //     // },
+        //     paste: function (e) {//paste事件  
+        //         var eve = e.originalEvent
+        //         var cp = eve.clipboardData;
+        //         var data = null;
+        //         var clipboardData = window.clipboardData; // IE  
+        //         if (!clipboardData) { //chrome  
+        //             clipboardData = e.originalEvent.clipboardData
+        //         }
+        //         data = clipboardData.getData('Text');
+        //         $('#message').html(data);
+        //     }
+        // });
+    </script>
+    <!--<script>
+        alert(1)
+    </script>-->
+</body>
+
+</html>
