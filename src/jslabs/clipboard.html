@@ -12,50 +12,78 @@
     </style>
 </head>
 
-<body>
+<body contenteditable="true">
     <div class="container-fluid">
         <h1>XSS TEST</h1>
         <hr/>
+        <div id="target">
+            copy
+        </div>
         <section id="message">
             dddddddddddddddd
         </section>
-   <input type="file" name="pic" accept="image/gif" value="D:\lizgit\nodecmd\pic\saber.gif" />
+        <input type="file" name="pic" accept="image/gif" value="D:\lizgit\nodecmd\pic\saber.gif" />
 
     </div>
-    <div id="scriptContainer">
-        script Container
-    </div>
+    <input id="scriptContainer" tabindex="-1" value="ddd">
+    <button id="paste">paste</button>
+
     <script>
-        // $(document.body).bind({
-        //     // copy: function (e) {//copy事件  
-        //     //     var cpTxt = "复制的数据";
-        //     //     var clipboardData = window.clipboardData; //for IE  
-        //     //     if (!clipboardData) { // for chrome  
-        //     //         clipboardData = e.originalEvent.clipboardData;
-        //     //     }
-        //     //     //e.clipboardData.getData('text');//可以获取用户选中复制的数据  
-        //     //     clipboardData.setData('Text', cpTxt);
-        //     //     clipboardData.setData('dd', 'eeee');
-        //     //     alert(cpTxt);
-        //     //     $('#message').text('Copy Data : ' + cpTxt);
-        //     //     return false;//否则设不生效  
-        //     // },
-        //     paste: function (e) {//paste事件  
-        //         var eve = e.originalEvent
+        $(document.body).bind({
+            copy: function (e) {//copy事件  
+                var cpTxt = "复制的数据";
+                var clipboardData = window.clipboardData; //for IE  
+                if (!clipboardData) { // for chrome  
+                    clipboardData = e.originalEvent.clipboardData;
+                }
+                //e.clipboardData.getData('text');//可以获取用户选中复制的数据  
+                clipboardData.setData('Text', cpTxt);
+                clipboardData.setData('dd', 'eeee');
+                alert(cpTxt);
+                $('#message').text('Copy Data : ' + cpTxt);
+               // return false;//否则设不生效  
+            },
+            paste: function (e) {//paste事件  
+                var eve = e.originalEvent
+                var cp = eve.clipboardData;
+                var data = null;
+                var clipboardData = window.clipboardData; // IE  
+                if (!clipboardData) { //chrome  
+                    clipboardData = e.originalEvent.clipboardData
+                }
+                data = clipboardData.getData('Text');
+                $('#message').html(data);
+            }
+        });
+        // $("#message").on('paste',function(e){
+        //   var eve = e.originalEvent
         //         var cp = eve.clipboardData;
         //         var data = null;
         //         var clipboardData = window.clipboardData; // IE  
         //         if (!clipboardData) { //chrome  
         //             clipboardData = e.originalEvent.clipboardData
         //         }
-        //         data = clipboardData.getData('Text');
+        //         data = clipboardData.getData('math');
         //         $('#message').html(data);
-        //     }
-        // });
+        // })
+        // $("#target").on('copy',function(e){
+        //       /// var cpTxt = "复制的数据";
+        //         var clipboardData = window.clipboardData; //for IE  
+        //         if (!clipboardData) { // for chrome  
+        //             clipboardData = e.originalEvent.clipboardData;
+        //         }
+        //         //e.clipboardData.getData('text');//可以获取用户选中复制的数据  
+        //        // clipboardData.setData('Text', cpTxt);
+        //         clipboardData.setData('math',this.outerHTML);
+
+        //         return false;//否则设不生效  
+        // })
+        // $("#paste").on('click', function () {
+        //     $("#scriptContainer").focus();
+        // console.log(document.execCommand('paste'));
+        // })
     </script>
-    <!--<script>
-        alert(1)
-    </script>-->
+
 </body>
 
 </html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href='http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css' rel='stylesheet'>
+    <script src='http://cdn.bootcss.com/jquery/3.0.0/jquery.js'></script>
+    <script src='https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js'></script>
+</head>
+
+<body>
+    <div contenteditable=true id="divTest">
+        平时我们使用文本框input, textarea时，我们有时候需要得到光标的位置或者说设置光标的位置. 但是文本框有个不足，就是不能满足我们插入图片或者其他的一些要求. 所以有时候我们使用div来代替文本框.
+    </div>
+    <script>
+        var cursor = 0; // 光标位置  
+        document.onselectionchange = function () {
+            var range = window.getSelection().createRange();
+            var srcele = range.parentElement();//获取到当前元素
+            var copy = document.body.createTextRange();
+            copy.moveToElementText(srcele);
+
+            for (cursor = 0; copy.compareEndPoints("StartToStart", range) < 0; cursor++) {
+                copy.moveStart("character", 1);//改变光标位置，实际上我们是在记录cursor的数量.
+            }
+        }
+    </script>
+</body>
+
+</html>
