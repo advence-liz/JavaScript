@@ -1,0 +1,9 @@
+class EventEmitter{
+
+    on(){
+
+    }
+    emit(){
+        
+    }
+}
