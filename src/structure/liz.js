@@ -32,7 +32,7 @@ String.prototype.format = function (args) {
 };
 // type ,print ,decomplie
 (function (liz) {
-   
+
     liz.type = function is(obj, type) {
         if (type) {
             var clas = Object.prototype.toString.call(obj).slice(8, -1);
@@ -45,57 +45,57 @@ String.prototype.format = function (args) {
     }
 
     liz.print = function (arg) {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-        document.writeln(arg+'<br/>');
+
+        document.writeln(arg + '<br/>');
     }
 
     liz.decompile = function (str) {
-        var functionStr = "return"+" " + str;
+        var functionStr = "return" + " " + str;
         var tmpFunction = Function(functionStr);
         return tmpFunction();
     }
 
 })(window.liz);
 
-+function(liz){
++function (liz) {
 
-liz.interface=function interface(name, methods) {
-    if (!interface.interfaces) {
-        interface.interfaces = [];
-    }
-    else if (interface.interfaces[name]) {
-        return interface.interfaces[name]
-    } 
-    
-
-    if (!methods) {
-        throw new Error("methods does not define");
-    }
-    function instance() {
-
-    }
-
-    for (var i=0, max = methods.length; i < max; i++) {
-        var consturctStr, funName = methods[i];
-        if (typeof (funName) == "string") {
-            consturctStr = "throw new Error('" + methods[i] + "must override')";
-            instance.prototype[funName] = decompile(consturctStr);
+    liz.interface = function interface(name, methods) {
+        if (!interface.interfaces) {
+            interface.interfaces = [];
         }
+        else if (interface.interfaces[name]) {
+            return interface.interfaces[name]
+        }
+
+
+        if (!methods) {
+            throw new Error("methods does not define");
+        }
+        function instance() {
+
+        }
+
+        for (var i = 0, max = methods.length; i < max; i++) {
+            var consturctStr, funName = methods[i];
+            if (typeof (funName) == "string") {
+                consturctStr = "throw new Error('" + methods[i] + "must override')";
+                instance.prototype[funName] = decompile(consturctStr);
+            }
+        }
+        var result = new instance();
+
+        interface.interfaces.push(result);
+        return result;
+
+
     }
-    var result = new instance();
-   
-    interface.interfaces.push(result);
-    return result;
-
-
-}
 }(window.liz);
 
 //List
-(function(liz){
+(function (liz) {
 
 
- liz.List = function List() {
+    liz.List = function List() {
         this.listSize = 0;
         this.pos = 0;
         this.dataStore = [];
@@ -152,7 +152,7 @@ liz.interface=function interface(name, methods) {
 
     function insert(element, after) {
         var insertPos = this.find(after);
-        if(insertPos>-1){
+        if (insertPos > -1) {
             this.dataStore.splice(insertPos + 1, 0, element);
             ++this.listSize;
             return true;
@@ -183,7 +183,7 @@ liz.interface=function interface(name, methods) {
         this.length = length;
         this.clear = clear;
     }
-   
+
     function push(ele) {
         this.dataStore[this.top++] = ele;
     }
@@ -200,61 +200,115 @@ liz.interface=function interface(name, methods) {
         this.top = 0;
     }
 })(window.liz);
-+function(liz){
-var decompile = function (str) {
-    var functionStr = str;
-    var tmpFunction = Function(functionStr);
-    return tmpFunction;
-}
-
-liz.interface=function interface(name, methods) {
-    if (!interface.interfaces) {//缓存interface 定义
-        interface.interfaces = [];
-    }
-    else if (interface.interfaces[name]) {//如果已经定义过直接返回
-        return interface.interfaces[name]
-    } 
-    
-
-    if (!methods) {
-        throw new Error("methods does not define");
-    }
-    function instance() {
-
++function (liz) {
+    var decompile = function (str) {
+        var functionStr = str;
+        var tmpFunction = Function(functionStr);
+        return tmpFunction;
     }
 
-    for (var i=0, max = methods.length; i < max; i++) {//在要返回的inastce 中添加interface 中定义的method
-        var consturctStr, funName = methods[i];
-        if (typeof (funName) == "string") {
-            consturctStr = "throw new Error('" + methods[i] + "must override')";
-            instance.prototype[funName] = decompile(consturctStr);
+    liz.interface = function interface(name, methods) {
+        if (!interface.interfaces) {//缓存interface 定义
+            interface.interfaces = [];
         }
+        else if (interface.interfaces[name]) {//如果已经定义过直接返回
+            return interface.interfaces[name]
+        }
+
+
+        if (!methods) {
+            throw new Error("methods does not define");
+        }
+        function instance() {
+
+        }
+
+        for (var i = 0, max = methods.length; i < max; i++) {//在要返回的inastce 中添加interface 中定义的method
+            var consturctStr, funName = methods[i];
+            if (typeof (funName) == "string") {
+                consturctStr = "throw new Error('" + methods[i] + "must override')";
+                instance.prototype[funName] = decompile(consturctStr);
+            }
+        }
+        var result = new instance();
+
+        interface.interfaces.push(result);
+        return result;
+
+
     }
-    var result = new instance();
-   
-    interface.interfaces.push(result);
-    return result;
-
-
-}
 }(window.liz);
 //child inherit  interface person
-liz.interface('person',['say','run']);
-function Child(){
-this.say=function(){};
-this.run=function(){};
+liz.interface('person', ['say', 'run']);
+function Child() {
+    this.say = function () { };
+    this.run = function () { };
 }
-child.prototype=liz.interface['person'];
-var child=new Child;
+child.prototype = liz.interface['person'];
+var child = new Child;
 
 
-with (window.liz) {
-    var names = new List();
-    names.append("Cynthia");
-    names.append("Raymond");
-    names.append("Barbara");
-    print(names.toString());
-    names.remove("Raymond");
-    print(names.toString());
+// with (window.liz) {
+//     var names = new List();
+//     names.append("Cynthia");
+//     names.append("Raymond");
+//     names.append("Barbara");
+//     print(names.toString());
+//     names.remove("Raymond");
+//     print(names.toString());
 
+// }
+
+
+function Queue() {
+    this.dataStore = [];
+    this.enqueue = enqueue;
+    this.dequeue = dequeue;
+    this.front = front;
+    this.back = back;
+
+    this.toString = toString;
+    this.empty = empty;
 }
+function enqueue(element) {
+    this.dataStore.push(element);
+}
+
+function dequeue() {
+    return this.dataStore.shift();
+}
+
+function front() {
+    return this.dataStore[0];
+}
+
+function back() {
+    return this.dataStore[this.dataStore.length - 1];
+}
+
+function toString() {
+    var retStr = "";
+    for (var i = 0; i < this.dataStore.length; ++i) {
+        retStr += this.dataStore[i] + "\n";
+    } return retStr;
+} function empty() {
+    if (this.dataStore.length == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+var print = function (arg) {
+    
+            document.writeln(arg + '<br/>');
+        }
+    
+var q = new Queue();
+q.enqueue("Meredith");
+q.enqueue("Cynthia");
+q.enqueue("Jennifer");
+print(q.toString());
+q.dequeue();
+print(q.toString());
+print("Front of queue: " + q.front());
+print("Back of queue: " + q.back());
