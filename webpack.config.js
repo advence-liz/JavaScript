@@ -14,40 +14,10 @@ let plugins = [
         template: 'template/_layout.ejs',
         favicon: "template/favicon.ico",
         inject: 'head',
-        title: "DUST",
-        data: fileList.map(function(filePath){
-            return  path.parse(filePath).name;
-        })
+        title: "DUST"
+      
     })
 ];
-function addHTMLPlugin(plugins) {
-   /**
-     * 
-     * var myFilePath = '/someDir/someFile.json';
-     * path.parse(myFilePath).base
-     * // "someFile.json"
-     * path.parse(myFilePath).name
-     * // "someFile"
-     * path.parse(myFilePath).ext
-     * // ".json"
-     *'/someDir/someFile.json'
-     *  @desc  纪念历史
-     *   // fileRegexp = /([\w\W]+)\.(\w+)$/;
-     *   fileList =  fs.readdirSync(path.join(__dirname, 'test'));
-     */
-    fileList.forEach(function (filePath) {
-        plugins.push(
-            new HtmlWebpackPlugin({
-                filename: path.parse(filePath).base,
-                template: filePath,
-                favicon: "template/favicon.ico",
-                inject: 'head',
-                title: path.parse(filePath).name
-            })
-        )
-    });
-}
-addHTMLPlugin(plugins);
 
 module.exports = {
     entry: {

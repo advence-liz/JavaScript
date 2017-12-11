@@ -14,7 +14,7 @@ const gulp = require("gulp"), //本地安装gulp所用到的地方
     reload = browserSync.reload,
     exec = require('child_process');
 const dist ="dist",
-      build= dist;
+      build= 'build';
 
 /**
  * @var {Object} JSWebpackEntry webpack javascript enrty oputput config
@@ -25,9 +25,9 @@ let JSWebpackEntry = {
     },
     output: {
         path: path.resolve(__dirname, build),
-        filename: "[name].js",
+        filename: "[name].js"
     }
-}
+};
 /**
  * 构建webpack task （虽然也可以在webpack传入数组构建多个task） 
  * @param {Object} customConfig 自定义webpack 配置部分主要是 入口出口
@@ -82,41 +82,7 @@ gulp.task('js', function () {
     //deferred.promise.then(function () {})
     return deferred.promise;
 });
-gulp.task('js:stream', function() {
-    // 表面上看 webpack 配置的 entry 和out path 无效 但是 fileName 配置还是有效的，没有进行深入研究
-    let webpackConfig = require("./webpack.config");
-    return gulp.src(path.join("js","index.js"))
-      .pipe(webpackStream(webpackConfig))
-      .pipe(gulp.dest(build))
-     
-  });
-/**
- * 源码存在sourceMap 文件中
- */
-gulp.task("less", function () {
-    gulp.src(path.join('less','dust.less'))
-        .pipe(sourcemaps.init())
-        .pipe(less())
-        .pipe(sourcemaps.write('./maps'))
-        .pipe(gulp.dest(build))
-       
-});
-gulp.task("html",function(){
-gulp.src(path.join('test','*.html'))
-.pipe(gulp.dest(build));
-})
-// 监视 less 文件的改动，如果发生变更，运行 'less' 任务，并且重载文件
-// gulp.task('start', ['less', 'js','html'], function () {
-//     browserSync({
-//       server: {
-//         baseDir: 'dist'
-//       }
-//     });
-  
-//     gulp.watch('less/*.less', ['less',reload]);
-//     gulp.watch('js/*.js', ['js',reload]);
-//     gulp.watch('dist/*.html', ['html',reload]);
-//   });
+
 //gulp.task(name[, deps], fn) 定义任务  name：任务名称 deps：依赖任务名称 fn：回调函数
 //gulp.src(globs[, options]) 执行任务处理的文件  globs：处理的文件路径(字符串或者字符串数组) 
 //gulp.dest(path[, options])处理完后文件生成路径
