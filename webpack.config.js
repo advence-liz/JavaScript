@@ -87,21 +87,3 @@ module.exports = {
         port: 9000
     }
 };
-//
-/**
- * HtmlWebpackPluginOption
- * 
- */
-function HTMLPluginOption(options) {
-
-    let baseOptions = {
-        filename: 'index.html',
-        template: 'template/_layout.ejs',
-        favicon: "template/favicon.ico",
-        inject: 'head',
-        title: "DUST"
-    };
-
-    Object.assign(this, baseOptions, options);
-
-}
