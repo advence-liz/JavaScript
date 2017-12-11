@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <style>
+       
+        .dice-6{
+            margin: 50px 50px;
+            width: 100px;
+            height: 100px;
+            transform-style: preserve-3d;
+            /*perspective: 400px;*/
+            transition: .6s ease-out;
+            transform: rotateX(45deg) rotateY(30deg);
+            /*perspective-origin: 50% 50%;*/
+        }
+
+      
+
+        .up {
+            /*background: rgba(102, 51,255,1);*/
+            transform: translateY(-50px) rotateX(90deg);
+        }
+        .bottom {
+            background: rgba(255,153, 0,1);
+            transform: rotateX(-90deg) translateZ(50px);
+        }
+        .right {
+            background: rgba(255, 0, 0,1);
+            transform: rotateY(90deg) translateZ(50px);
+        }
+        .left {
+            background: rgba( 51,255, 0,1);
+            transform: rotateY(-90deg) translateZ(50px);
+        }
+        .back {
+            background: rgba(255,50,160,1);
+            transform: translateZ(-50px);
+        }
+        .front {
+            background: rgba( 0,153,255,1);
+            transform: translateZ(50px);
+        }
+
+      
+    .first-face {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+     }
+
+    .second-face {
+        display: flex;
+        justify-content: space-between;
+      }
+
+    .second-face .pip:nth-of-type(2) {
+        align-self: flex-end;
+       }
+
+    .third-face {
+        display: flex;
+        justify-content: space-between;
+       }
+  
+    .third-face .pip:nth-of-type(2) {
+       align-self: center;
+      }
+
+     .third-face .pip:nth-of-type(3) {
+        align-self: flex-end;
+      }
+
+     .fourth-face, .sixth-face {
+       display: flex;
+       justify-content: space-between;
+      }
+
+     .fourth-face .column, .sixth-face .column {
+       display: flex;
+       flex-direction: column;
+       justify-content: space-between;
+      }
+
+     .fifth-face {
+       display: flex;
+       justify-content: space-between;
+      }
+  
+     .fifth-face .column {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+  
+     .fifth-face .column:nth-of-type(2) {
+       justify-content: center;
+      }
+
+     /* OTHER STYLES */
+
+     * {
+         box-sizing: border-box;
+       }
+
+
+
+  [class$="face"] {
+
+    margin: 16px;
+    padding: 4px;
+  
+    background-color: #e7e7e7;
+    width: 104px;
+    height: 104px;
+    object-fit: contain;
+  
+    box-shadow:
+    inset 0 5px white, 
+    inset 0 -5px #bbb,
+    inset 5px 0 #d7d7d7, 
+    inset -5px 0 #d7d7d7;
+  
+    border-radius: 10%;
+    }
+    .disc{
+      position: absolute;
+      margin: 16px;
+      padding: 3px;
+  
+     background-color: #e7e7e7;
+     width: 100px;
+     height: 100px;
+     object-fit: contain;
+  
+      box-shadow:
+      inset 0 2px white, 
+      inset 0 -2px #bbb,
+      inset 2px 0 #d7d7d7, 
+      inset -2px 0 #d7d7d7;
+  
+      border-radius: 10%;
+   }
+  .pip {
+      display: block;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      margin: 4px;
+
+      background-color: #333;
+      box-shadow: inset 0 3px #111, inset 0 -3px #555;
+    }
+    </style>
+</head>
+
+<body>
+    <h2>点击任意骰子开关动画</h2>
+    <label>调节动画速度</label><input id="range" type="range" name="points" min="0" max="100" step="5" value="5">
+    <section id="content" style="display: flex;flex-flow: wrap">
+
+</section>
+
+
+
+</body>
+
+<script>
+
+
+    var dice_template = [
+        '<div class="dice-6" style>',
+        '<div class="first-face disc up"><span class="pip"></span></div>',
+        '<div class="second-face disc back"><span class="pip"></span><span class="pip"></span></div>',
+        '<div class="third-face disc bottom"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>',
+        '<div class="fourth-face disc front"><div class="column"><span class="pip"></span><span class="pip"></span></div><div class="column"><span class="pip"></span><span class="pip"></span></div></div>',
+        '<div class="fifth-face disc left"><div class="column"><span class="pip"></span><span class="pip"></span></div><div class="column"><span class="pip"></span></div><div class="column"><span class="pip"></span><span class="pip"></span></div></div>',
+        '<div class="sixth-face disc right"><div class="column"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div><div class="column"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div></div>',
+        '</div>'
+    ];
+    dice_template = dice_template.join("");
+
+    var randomerMaker = (Min, Max) => {
+        var Range = Max - Min;
+        var Rand = Math.random();
+        return (Min + Math.round(Rand * Range));
+    };
+    var randomerMaker = randomerMaker.bind(null, 1, 6);
+    var dice_arr = [];
+    var content_str = "";
+    var directionEnum = {
+        1: 'style="transform: rotateX(-90deg) rotateY(0deg);"',
+        2: 'style="transform: rotateX(-180deg) rotateY(0deg);"',
+        3: 'style="transform: rotateX(90deg) rotateY(0deg);"',
+        4: 'style="transform: rotateX(0deg) rotateY(0deg);"',
+        5: 'style="transform: rotateX(0deg) rotateY(90deg);"',
+        6: 'style="transform: rotateX(0deg) rotateY(-90deg);"'
+    }
+    for (var i = 0; i < 200; i++) {
+        dice_arr.push(randomerMaker());
+    }
+    dice_arr.map(function (index) {
+        var tem_str = dice_template.replace(/style/, directionEnum[index]);
+        content_str += tem_str;
+    })
+    var content = $("#content");
+    content.append(content_str);
+    window.deg = 5;
+    $("#range").click(function () {
+        window.deg = ~~this.value;
+    })
+    $("#content").click(function () {
+        /**
+         * @var dices 页面所有骰子的jQuery对象集合
+         * @var deg  骰子将要旋转的角度
+         * @var start 动画效果开关
+         * @var flag  handle of interva
+         * @var reg  正则获取 X Y deg
+         */
+        var dices = $(".dice-6"),
+            start = false,
+            flag,
+            reg = /.*rotateX\((.*)deg\).* rotateY\((.*)deg\)/
+        return function () {
+
+            if (start) {
+                clearInterval(flag);
+                start = false;
+            } else {
+
+                start = true;
+                flag = setInterval(function () {
+
+                    dices.each(function (index, ele) {
+                        var transform_str = ele.style.transform,
+                            match_arr,
+                            degX,
+                            degY;
+                        match_arr = transform_str.match(reg);
+                        switch (index % 3) {
+                            case 1:
+                               degX = ~~match_arr[1] + window.deg;
+                               degY = ~~match_arr[2];
+                                break;
+                            case 2:
+                               degX = ~~match_arr[1];
+                               degY = ~~match_arr[2] + window.deg;
+                                break;
+
+                            default:
+                               degX = ~~match_arr[1] + window.deg;
+                               degY = ~~match_arr[2] + window.deg;
+                                break;
+                        }
+
+                        ele.style.transform = 'rotateX(' + degX + 'deg)rotateY(' + degY + 'deg)';
+                    })
+                }, 500);
+            }
+        }
+
+    } ());
+//switchButton.click();
+</script>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <script src="http://cdn.bootcss.com/jquery/3.0.0/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+    <style>
+
+	</style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <p>template</p>
+        <li>
+            <a href="http://www.phpchina.com/thread-221206-1-1.html"></a>
+        </li>
+
+
+
+
+        <button type="button" id="btn" class="btn btn-default">改变items</button>
+        <button type="button" id="btn1" class="btn btn-default">改变selectedIndex</button>
+    </div>
+    <script>
+     var HTMLEncode= function HTMLEncode() {
+            var converter = document.createElement("DIV");
+            var output = converter.innerHTML;
+            return HTMLEncode = function (input) {
+                converter.innerText = input;
+                output = converter.innerHTML;
+                return output;
+            }
+
+        }();
+
+        $.extend({HTMLEncode:HTMLEncode});
+
+
+
+    </script>
+</body>
+
+</html>

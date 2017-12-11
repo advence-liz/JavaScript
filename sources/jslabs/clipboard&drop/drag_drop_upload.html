@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>拖拽上传图片</title>
+</head>
+ 
+
+<body>
+<style  type="text/css" >
+ ul,li{margin:0px; }
+ .on{ border:#333;}
+ #dropbox{border: 3px solid #DDDDDD;border-radius: 10px 10px 10px 10px;color: #FF3300;
+		display: inline-block;
+		min-height: 200px;    
+		padding: 10px;
+	}
+ #dropbox img{max-width:100px; max-height:100px;}
+ #dropbox li{padding:2px; border-bottom:1px dashed #CCC;}
+ 
+</style>
+<h1><a href="http://www.cnblogs.com/nh11/archive/2011/12/01/2267578.html">REF</a></h1>
+<div name="image" id="dropbox" style="min-width:300px;min-height:100px;border:3px dashed silver;">
+	 
+
+</div> 
+ <div id="preview"></div>
+<script >
+/*
+ document.addEventListener("dragenter", function(e){   
+    dropbox.style.borderColor = 'gray';   
+}, false);   
+document.addEventListener("dragleave", function(e){   
+    dropbox.style.borderColor = 'silver';   
+}, false); 
+ */
+var DDU = function(container,op) {
+	//默认选项
+	this.op={fileFieldName:'newFile',//文件域的名称
+			 autoUpload	  :false,//是否拖拽进来就立即上传
+			 callback	  :function(){}//上传成功后的回调函数
+			 };
+	 
+	this.op	=this.extend(this.op,op);//要是有jquery就好啦
+ 
+	this.container	=document.getElementById(container);
+	//this.server		=op.server;
+	//this.fileFieldName=op.fileFieldName;
+	//this.autoUpload	=false;
+	 
+	
+	this.fileIndex	=0;//容器中的文件索引
+	this.files		= new Array();//容器中的文件
+ 
+	this.init();
+}
+DDU.prototype={
+	init:function(){
+		var self=this;
+		this._init();
+		var box=this.container;
+		
+		
+		if(!this.op.autoUpload){//若不自动上传，添加上传按钮
+			var bt=create('button');
+				bt.innerHTML='上传';
+				bt.onclick=function(){self.upload_all();};
+			box.appendChild(bt);
+		}
+			var bt_clear=create('button');
+				bt_clear.innerHTML='清空';
+				bt_clear.onclick=function(){
+					self.files=[];
+					self.file_list.innerHTML='';
+				};
+			box.appendChild(bt_clear);
+		this.file_list=create('ul');	
+		box.appendChild(this.file_list);
+	 
+		/*box.addEventListener("dragenter", function(e){   
+			box.style.borderColor = 'gray';   
+			box.style.backgroundColor = 'white';   
+		}, false);   
+		box.addEventListener("dragleave", function(e){   
+			box.style.backgroundColor = 'transparent';   
+		}, false);  */ 
+		box.addEventListener("dragenter", function(e){ e.stopPropagation();  e.preventDefault(); }, false);   
+		box.addEventListener("dragover" , function(e){ e.stopPropagation();  e.preventDefault(); }, false);   
+		box.addEventListener("drop"		, function(e){ e.stopPropagation();  e.preventDefault();   
+				 
+			self.handleFiles(e.dataTransfer.files);           
+		
+		}, false);
+	},
+	//处理文件
+	handleFiles : function(files) {   
+		for (var i = 0; i < files.length; i++) {
+			var file = files[i]; 
+			if (!file.type.match(/image*/)) {
+				continue;   
+			}   	
+			//预览图片
+			var fid=this.fileIndex++;
+			file.fid=fid;
+			this.files[fid]=file;
+			this.preview_file(file);
+		 
+			if(this.op.autoUpload){//上传图片
+				this.upload_file(file);
+			}
+				
+		}	
+    },
+	//预览图片
+	preview_file : function(file){
+		var self=this; 
+		bug(file);
+		var fid=file.fid;
+			
+		
+		var rd=new FileReader();
+			rd.onloadend=function(e){
+					var li=create('li');
+					var span_fname=create('span');
+					//进度条
+					var prograss=create('span');
+						prograss.className='prograss';
+						prograss.id='_prograss_'+fid;
+						//span.innerHTML=file.name;
+					li.appendChild(prograss);
+					//图片预览
+					var img=create('img');
+						img.src=this.result;
+						//img.width=100;
+						img.title=file.name;
+					li.appendChild(img);
+					//移除按钮
+					var	close=create('button');
+						close.innerHTML='x';
+						close.setAttribute('fid',fid);
+						close.addEventListener('click',function(){
+									self.file_list.removeChild(this.parentNode);//移除 li
+									var id=this.getAttribute('fid');
+									self.files[id]=null;
+									});
+					li.appendChild(close);
+					
+					li.appendChild(span_fname);
+					 
+					self.file_list.appendChild(li);
+ 
+			  
+				}
+			rd.readAsDataURL(file);  
+			 
+			
+	},
+	//上传所有文件
+	upload_all :function(){
+		for (var i = 0; i < this.files.length; i++) {
+			var file = this.files[i];  
+			//上传图片
+			if(file !=null){
+				this.upload_file(file);
+				bug('up');
+			}
+		}	
+	},
+	//上传文件
+	upload_file : function (file){
+	var self=this;
+	var reader = new FileReader(); 
+		reader.readAsBinaryString(file);
+		 
+		reader.onloadend = function(){
+			//bug(this.readyState); // 这个时候 应该是 2
+			//bug(this.result); //读取完成回调函数，数据保存在result中	
+			var fileData=this.result;
+			self.send_file(this.result,file.fid,file.name,file.type);
+			
+			
+			XMLHttpRequest
+			
+		}
+	},
+	send_file:function(file_data,fid,file_name,file_type){
+		var self=this;
+			var CRLF="\r\n";
+			var xhr = new XMLHttpRequest();
+			upload =xhr.upload;
+			
+			upload.fid=fid;
+			upload.addEventListener("progress", updateProgress, false);
+			 
+			//xhr.addEventListener("loadend", function(){ }, false); 			
+			xhr.open('post', self.op.server, true);
+			 
+			var boundary='-----nh-ksc-OTkwNzI0OTEx----';
+			// simulate a file MIME POST request.     
+			xhr.setRequestHeader("Content-Type", "multipart/form-data, boundary="+boundary);
+			//xhr.setRequestHeader("Content-Length", file.size);     
+			var body = '';     
+			body += '--' + boundary + CRLF;
+			body += 'Content-Disposition: form-data; name="'+self.op.fileFieldName+'"; filename="' + file_name + '"'+CRLF;     
+			body += "Content-Type: "+file_type+CRLF+CRLF;     
+			body += file_data + CRLF;     
+			body += "--" + boundary + "--"+CRLF; 
+
+		
+			xhr.onreadystatechange = function (aEvt) {  
+			  if (xhr.readyState == 4) {  
+				 if (xhr.status == 200)  
+				   self.op.callback(xhr.responseText); 
+				 else  
+				   bug('Error', xhr.statusText);  
+			  }  
+			};  
+		
+			xhr.sendAsBinary(body);
+			//xhr.send(body);
+	},
+	//兼容性处理
+	_init:function(){
+		if(typeof(XMLHttpRequest.prototype.sendAsBinary)=='undefined'){
+			XMLHttpRequest.prototype.sendAsBinary = function(datastr) {
+				function byteValue(x) {
+					return x.charCodeAt(0) & 0xff;
+				}
+				var ords = Array.prototype.map.call(datastr, byteValue);
+				var ui8a = new Uint8Array(ords);
+				this.send(ui8a.buffer);
+			}
+		}//end if
+	
+	}
+	, 
+	extend :function (target, source) {
+		for (var p in source) {
+			if (source.hasOwnProperty(p)) {
+				target[p] = source[p];
+			}
+		}
+		
+		return target;
+	}
+	
+};
+function updateProgress(evt) {   
+  
+	var fid=this.fid; 	 
+	if (evt.lengthComputable) {  
+		var percentComplete = Math.round((evt.loaded * 100) / evt.total)
+		bug(percentComplete);
+		oo('_prograss_'+fid).innerHTML=percentComplete;
+
+	} 
+	else {  
+	// Unable to compute progress information since the total size is unknown  
+	}  
+}  
+ 
+var op={'server'		:'/test/index.php',
+		'autoUpload'	:true,
+		'fileFieldName'	:'image',
+		'callback'		:function(text){//回调
+			oo('preview').innerHTML=text;
+
+		}
+	};
+ 
+			
+var dd=new DDU('dropbox',op);
+ 
+function bug(o){	  console.log(o); };
+function oo(id){ return document.getElementById(id);}
+function create(s){ return document.createElement(s);}
+</script>
+</body>
+</html>
