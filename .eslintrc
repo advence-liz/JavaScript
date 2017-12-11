@@ -1,0 +1,36 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true,
+    "jquery": true
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+ 
+  "plugins": [
+    "react"
+  ],
+  "globals": {
+    "ReactDOM": false,
+    "React": false,
+    "$$": false,
+    "R": true,
+    "UIElement": true,
+    "DependencyObject": false,
+    "AUI": true
+  },
+  "rules": {
+    "no-console": "off",
+    "no-unused-vars": "warn",
+    "no-undef": "error",
+    "valid-jsdoc": [
+      1,
+      {
+        "requireReturn": false
+      }
+    ]
+  }
+}

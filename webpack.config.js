@@ -5,8 +5,8 @@ const webpack = require('webpack'),
     //  _ = require("lodash"),
     HtmlWebpackPlugin = require('html-webpack-plugin');
 
-let    fileList = glob.sync("test/*.html");
-let outputPath ="build";
+let fileList = glob.sync("test/*.html");
+let outputPath = "build";
 //获取可以把pulgins 构建成一个class
 let plugins = [
     new HtmlWebpackPlugin({
@@ -15,7 +15,7 @@ let plugins = [
         favicon: "template/favicon.ico",
         inject: 'head',
         title: "DUST"
-      
+
     })
 ];
 
@@ -25,7 +25,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, outputPath),
-        filename: "[name].js",
+        filename: "[name].js"
     },
 
     module: {
@@ -79,7 +79,7 @@ module.exports = {
     plugins: plugins,
     externals: {
         'react': ' window.React',
-        'react-dom': ' window.ReactDOM',
+        'react-dom': ' window.ReactDOM'
     },
     devServer: {
         contentBase: path.join(__dirname, outputPath),
