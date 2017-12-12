@@ -1,4 +1,4 @@
 README.md merge=ours
 gulpfile.js merge=ours
 webpack.config.js merge=ours
-src/ merge=ours
+src/** merge=ours
