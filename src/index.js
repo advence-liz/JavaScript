@@ -8,7 +8,7 @@ let html = `<%if(this.on)%>
 <% this.liz %>
 <%} %>`;
 console.log(template(html, options));
-//dddddddddd
+//ddddddddddcccccc
 
 let complie = template(html);
 console.log(complie(options));
