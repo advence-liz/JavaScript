@@ -8,6 +8,7 @@ build/
 bower_components/
  "**/.*"
  .vs/
+ src/
 babel_cache/
 #################
 ## Visual Studio
