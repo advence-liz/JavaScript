@@ -7,7 +7,6 @@
 
 ## TODO
 - [ ]添加脚本 删除 src 并 提交 code
-- [ ]test gitattributes
 ## REF
 - <a href="https://jex.im/regulex/#!embed=false&flags=&re=%5E(a%7Cb)*%3F%24">正则</a>
 
