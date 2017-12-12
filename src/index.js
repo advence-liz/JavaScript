@@ -1,4 +1,3 @@
-import "babel-polyfill";
 import {BasePublisher,BaseSubscriber} from './observe';
 
 class NewsSubscriber extends BaseSubscriber {
