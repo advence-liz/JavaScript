@@ -6,8 +6,8 @@
 这样会多merge src 下的内容，master 删除 src 然后提交（计划写个脚本完成这个过程）
 
 ## TODO
-- [ ]添加脚本 删除 src 并 提交 code
-- [ ]test gitattributes
+- [ ]添加脚本 删除 src 并 提交 code 
+ - 是不是又冲突才好使
 ## REF
 - <a href="https://jex.im/regulex/#!embed=false&flags=&re=%5E(a%7Cb)*%3F%24">正则</a>
 
