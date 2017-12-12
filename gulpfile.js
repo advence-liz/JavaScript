@@ -15,7 +15,7 @@ const gulp = require("gulp"), //本地安装gulp所用到的地方
     exec = require('child_process');
 const dist ="dist",
       build= 'build';
-
+//ddddddddddddd
 /**
  * @var {Object} JSWebpackEntry webpack javascript enrty oputput config
  */
