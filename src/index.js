@@ -11,7 +11,7 @@ class NewsSubscriber extends BaseSubscriber {
     }
 }
 
-const map = new Map();
+
 var publisher = new BasePublisher();
 var subscribe = new NewsSubscriber( function () { console.log(this.liz); }, { liz: 'liz' });
 subscribe.toString();
