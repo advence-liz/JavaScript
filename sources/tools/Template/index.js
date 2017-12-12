@@ -9,6 +9,6 @@ let html = `<%if(this.on)%>
 <%} %>`;
 console.log(template(html, options));
 
-
+//test gitattributes
 let complie = template(html);
 console.log(complie(options));
