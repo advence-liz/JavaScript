@@ -5,13 +5,10 @@ const gulp = require("gulp"), //本地安装gulp所用到的地方
     argv = require('yargs').argv,
     path = require('path'),
     Q = require('q'),
+    git = require('gulp-git'),
     webpack = require("webpack"),
-    webpackStream = require("webpack-stream"),
     util = require("gulp-util"),
     less = require("gulp-less"),
-    sourcemaps = require("gulp-sourcemaps"),
-    browserSync = require('browser-sync'),
-    reload = browserSync.reload,
     exec = require('child_process');
 const dist ="dist",
       build= 'build';
@@ -82,6 +79,16 @@ gulp.task('js', function () {
     //deferred.promise.then(function () {})
     return deferred.promise;
 });
+
+// Run git commit 
+// src are the files to commit (or ./*) 
+// 原来 . equal ./* equal ./
+// ./** equal ./**/*
+gulp.task('commit', function(){
+    return gulp.src(path.join('sources','**'))
+      .pipe(git.commit('auto commit!'));
+  });
+
 
 //gulp.task(name[, deps], fn) 定义任务  name：任务名称 deps：依赖任务名称 fn：回调函数
 //gulp.src(globs[, options]) 执行任务处理的文件  globs：处理的文件路径(字符串或者字符串数组) 
