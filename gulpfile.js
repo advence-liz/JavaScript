@@ -7,7 +7,7 @@ const gulp = require("gulp"), //本地安装gulp所用到的地方
     Q = require('q'),
     git = require('gulp-git'),
     webpack = require("webpack"),
-    util = require("gulp-util"),
+    gutil = require("gulp-util"),
     less = require("gulp-less"),
     exec = require('child_process');
 const dist ="dist",
@@ -89,6 +89,15 @@ gulp.task('commit', function(){
       .pipe(git.commit('auto commit!'));
   });
 
+// Run git add 
+// src is the file(s) to add (or ./*) 
+// git add . 是穿透子目录的并不只是一级 看来git 插件 gulp.src 遵守的是 git 的匹配规则 ，并不是glob 可能只是为了形式统一
+gulp.task('add', function(){
+    del.sync("src/**/*");
+    return gulp.src('.')
+      .pipe(git.add())
+      .on('error',gutil.log);
+  });
 
 //gulp.task(name[, deps], fn) 定义任务  name：任务名称 deps：依赖任务名称 fn：回调函数
 //gulp.src(globs[, options]) 执行任务处理的文件  globs：处理的文件路径(字符串或者字符串数组) 
