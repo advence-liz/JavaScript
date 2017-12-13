@@ -5,7 +5,7 @@
  * ADS Library Initial Starting Point
  * http://advanceddomscripting.com/chapter1/ADS-start.js
  */
-
+/******************************** */
     (function (window) {
 
         //The ADS namespace
