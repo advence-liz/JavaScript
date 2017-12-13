@@ -37,7 +37,7 @@ class BasePublisher {
     }
     /**
      * 获取我可以传一个 handle 触发特定 topic 下特定 subscribe
-     * @param {String|Handle} topic 
+     * @param {String|Handle} topic topic
      * @desc 允许传一些其他自定义参数呢感觉不需要
      */
     publish(topic) {
@@ -67,14 +67,14 @@ class BasePublisher {
 class BaseSubscriber {
     /**
      * 或许topic 通过继承基类的方式，一个子类一个更面向对象
-     * @param {String} topic 
-     * @param {*} fn 
-     * @param {*} context 
+     * @param {*} fn fn
+     * @param {*} context context
+     * @param {String} topic topic
      */
-    constructor(fn, context) {
+    constructor(fn, context,topic) {
         this.fn = fn;
         this.context = context;
-        this.topic = null;
+        this.topic = topic;
     }
     exec() {
         this.fn.call(this.context);
