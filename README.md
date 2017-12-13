@@ -9,7 +9,7 @@
 
 - [ ]添加脚本 删除 src 并 提交 c的点点滴滴ode 
 
-- [ ]gitattributes 没玩明白
+- [ ]gitattributes 看起来就是规定二进制文件对比规则
 
 ## REF
 - <a href="https://jex.im/regulex/#!embed=false&flags=&re=%5E(a%7Cb)*%3F%24">正则</a>
