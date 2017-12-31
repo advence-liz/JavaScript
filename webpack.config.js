@@ -14,7 +14,7 @@ let plugins = [
         template: 'template/_layout.ejs',
         favicon: "template/favicon.ico",
         inject: 'head',
-        title: "DUST"
+        title: "Mock"
 
     })
 ];
