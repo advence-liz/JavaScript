@@ -1,7 +1,7 @@
 {
-  "name": "dust",
+  "name": "javascript",
   "version": "2.0.0",
-  "description": "a framwork which includes a custom bootstrap css framework，some custom jquery plug-ins, and uses the node.js to realize front-end automation.",
+  "description": "......",
   "dependencies": {
     "lodash": "^4.17.4"
   },
@@ -12,6 +12,7 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
     "browser-sync": "^2.18.13",
     "css-loader": "^0.28.7",
     "del": "^3.0.0",
@@ -37,14 +38,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sharpgui/dust"
+    "url": "https://github.com/advence-liz/JavaScript"
   },
   "scripts": {
     "build": "webpack --progress --profile --colors",
     "start": "webpack-dev-server --inline --hot",
     "analyse": "webpack --profile --json>analyse.json"
   },
-  "homepage": "https://github.com/sharpgui/dust",
-  "author": "sharpgui",
+  "homepage": "https://github.com/advence-liz/JavaScript",
+  "author": "advence-liz",
   "license": "ISC"
 }
