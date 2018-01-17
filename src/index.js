@@ -1,4 +1,5 @@
-require("babel-polyfill");
+// require("babel-core/register");
+import "babel-polyfill";
 function timeout(ms) {
     return new Promise((resolve) => {
       setTimeout(resolve, ms);
@@ -10,4 +11,4 @@ function timeout(ms) {
     console.log(value);
   }
   
-  asyncPrint('hello world', 50);
+  asyncPrint('hello world', 1000);

@@ -21,7 +21,7 @@ let plugins = [
 
 module.exports = {
     entry: {
-        dust: './src'
+        dust: ['./src/index.js']//'babel-polyfill'
     },
     output: {
         path: path.resolve(__dirname, outputPath),
