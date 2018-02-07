@@ -34,10 +34,18 @@ function convertDate2Ticks(date, targetTimezone = CurrentTimezone) {
         targetTimezone = -targetTimezone / 60;
     }
     let times, ticks
-    //UTC.getTimes=cur.getTimes+cur.timezone*n //n=60*60*1000 为常量
-    times = date.getTime() + (CurrentTimezone - targetTimezone) * HourMillisecond;
+    times = convertDate2Times(date, targetTimezone);
     ticks = times * 10000 + TickOffset;
     return ticks;
+}
+//UTC.getTimes=cur.getTimes+cur.timezone*n //n=60*60*1000 为常量
+function convertDate2Times(date, targetTimezone = CurrentTimezone) {
+    if (Math.abs(targetTimezone) > 12) {
+        targetTimezone = -targetTimezone / 60;
+    }
+    let times;
+    times = date.getTime() + (CurrentTimezone - targetTimezone) * HourMillisecond;
+    return times;
 }
 /**
  * 将ticks 转换为目标date
@@ -63,8 +71,17 @@ function convertTicks2Date(ticks, targetTimezone = CurrentTimezone) {
         targetTimezone = -targetTimezone / 60;
     }
     let times = (ticks - TickOffset) / 10000;
+    // let currentTimes = times + (targetTimezone - CurrentTimezone) * HourMillisecond;
+    // return new Date(currentTimes);
+    return convertTimes2Date(times, targetTimezone);
+}
+
+function convertTimes2Date(times, targetTimezone = CurrentTimezone) {
+    if (Math.abs(targetTimezone) > 12) {
+        targetTimezone = -targetTimezone / 60;
+    }
     let currentTimes = times + (targetTimezone - CurrentTimezone) * HourMillisecond;
     return new Date(currentTimes);
 }
 
-export {convertDate2Ticks,convertTicks2Date};
+export { convertDate2Ticks, convertTicks2Date, convertDate2Times, convertTimes2Date };
