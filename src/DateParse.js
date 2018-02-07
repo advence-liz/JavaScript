@@ -4,6 +4,7 @@ const reg = /([Yy]+|M+|[Dd]+|[Hh]+|m+|s+|S+)/g;
 /**
  * 
  * @param {String} str   用来解析日期的字符串
+ * @param {String} format   解析字符串遵守的模式
  * @desc
  *   年   月   日  时    分 秒  毫秒
  *  ([Yy]+|M+|[Dd]+|[Hh]+|m+|s+|S+/g

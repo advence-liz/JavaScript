@@ -48,6 +48,7 @@ class DateFormat {
                 reg = new RegExp("(" + k + ")");
 
             if (reg.test(fmt)) {
+                // RegExp.$1.length == 1 看起来当时毫秒的时候比较有意义
                 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             }
         }
