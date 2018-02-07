@@ -5,8 +5,15 @@ const CurrentTimezone = -CurrentTimezonOffset / 60;
 //60*60*1000 此值定义为常量是有意义，因为 JavaScript 大数运算丢精度下面的表达式转为常量后稳定性提高了好很多 
 //times = date.getTime() + (CurrentTimezone - targetTimezone) * HourMillisecond;
 const HourMillisecond = 3600000;
+// targetTimezone=getTimezone(targetTimezone);
+function getTimezone(targetTimezone){
+    if (Math.abs(targetTimezone) > 12) {
+        targetTimezone = -targetTimezone / 60;
+    }
+    return targetTimezone;
+}
 /**
- * 此方法以date(精确到秒那种）为基准 计算得出目标时区 相同date 的ticks 数 
+ * 此方法以date 为基准 计算得出目标时区 相同date 的ticks 数（即可以通过当前东八区8:00 的Date 对象，计算出任意给定时区八点的 Ticks 数）
  * date 相同的话 时区越大 ticks 越小
  * 正常存入后端cur.getTimes 就OK了，前端回显直接通过 times 转为当前Date 对象
  * @param {Date} date Date 浏览器端Date对象
@@ -30,9 +37,7 @@ const HourMillisecond = 3600000;
  * Wed Dec 06 2017 14:29:52 GMT+0800 (China Standard Time)
  */
 function convertDate2Ticks(date, targetTimezone = CurrentTimezone) {
-    if (Math.abs(targetTimezone) > 12) {
-        targetTimezone = -targetTimezone / 60;
-    }
+    targetTimezone=getTimezone(targetTimezone);
     let times, ticks
     times = convertDate2Times(date, targetTimezone);
     ticks = times * 10000 + TickOffset;
@@ -40,9 +45,7 @@ function convertDate2Ticks(date, targetTimezone = CurrentTimezone) {
 }
 //UTC.getTimes=cur.getTimes+cur.timezone*n //n=60*60*1000 为常量
 function convertDate2Times(date, targetTimezone = CurrentTimezone) {
-    if (Math.abs(targetTimezone) > 12) {
-        targetTimezone = -targetTimezone / 60;
-    }
+    targetTimezone=getTimezone(targetTimezone);
     let times;
     times = date.getTime() + (CurrentTimezone - targetTimezone) * HourMillisecond;
     return times;
@@ -67,21 +70,16 @@ function convertDate2Times(date, targetTimezone = CurrentTimezone) {
  * Tue Dec 05 2017 22:21:11 GMT+0800 (China Standard Time)
  */
 function convertTicks2Date(ticks, targetTimezone = CurrentTimezone) {
-    if (Math.abs(targetTimezone) > 12) {
-        targetTimezone = -targetTimezone / 60;
-    }
+    targetTimezone=getTimezone(targetTimezone);
     let times = (ticks - TickOffset) / 10000;
-    // let currentTimes = times + (targetTimezone - CurrentTimezone) * HourMillisecond;
-    // return new Date(currentTimes);
     return convertTimes2Date(times, targetTimezone);
 }
 
 function convertTimes2Date(times, targetTimezone = CurrentTimezone) {
-    if (Math.abs(targetTimezone) > 12) {
-        targetTimezone = -targetTimezone / 60;
-    }
+    targetTimezone=getTimezone(targetTimezone);
     let currentTimes = times + (targetTimezone - CurrentTimezone) * HourMillisecond;
     return new Date(currentTimes);
 }
+
 
 export { convertDate2Ticks, convertTicks2Date, convertDate2Times, convertTimes2Date };
