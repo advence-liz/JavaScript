@@ -51,7 +51,7 @@ function convertDate2Times(date, targetTimezone = CurrentTimezone) {
     return times;
 }
 /**
- * 将ticks 转换为目标date
+ * 将ticks 转换为目标date （根据ticks 转化成任意时区Date 对象,不过只是Date对象数值上跟对应时区一致时区还是当前浏览器时区）
  * ticks 相同的话 目标时区越大 date 越大 浏览器的Date 构造函数 就会将 Times 转为 当前时区 date 对
  * 但是如果 当前时区不等于目标时区 date 就要加减 时区偏移差的小时数 目标大于 当前时区 则加 
  * 但是由于使用 new Date（times） 生成date 对象 所以通过 加上 偏差对应的tiems 数
