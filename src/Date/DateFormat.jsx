@@ -12,7 +12,7 @@
  * dateFormat.setDate(new Date("eee"))
  */
 
-class DateFormat {
+export class DateFormat {
     constructor(date = new Date()) {
         this.date = date;
         this.format = this.format.bind(this.date);
@@ -43,7 +43,7 @@ class DateFormat {
         };
         if (/(y+)/i.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
         for (var k in o) {
-            var reg = k === 'h+' || k === 'd+' ||k ==='q+'?
+            var reg = k === 'h+' || k === 'd+' || k === 'q+' ?
                 reg = new RegExp("(" + k + ")", 'i') :
                 reg = new RegExp("(" + k + ")");
 
@@ -56,4 +56,3 @@ class DateFormat {
     }
 
 }
-export default DateFormat;

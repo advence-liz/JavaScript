@@ -1,7 +1,5 @@
 
-import DateFormat from "./DateFormat";
-import dateParse from "./DateParse";
-import { convertDate2Ticks, convertTicks2Date, convertDate2Times, convertTimes2Date } from './DateConvert';
+import { convertDate2Ticks, convertTicks2Date, convertDate2Times, convertTimes2Date,DateFormat,dateParse } from './Date';
 import _ from "lodash";
 const { log, assert, group, groupEnd } = console;
 var dateStr = new DateFormat().format("yYyyMMDdhhmmss");

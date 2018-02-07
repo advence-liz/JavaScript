@@ -14,7 +14,7 @@ const reg = /([Yy]+|M+|[Dd]+|[Hh]+|m+|s+|S+)/g;
  * dateParse('2018-02-07-14-02-11',"yYyy-MM-Dd-hh-mm-ss");
  * > Wed Mar 07 2018 14:02:11 GMT+0800 (China Standard Time)
  */
-function dateParse(str,format) {
+export function dateParse(str, format) {
     let matcher, date = new Date();
     while ((matcher = reg.exec(format))) {
         let char = matcher[0][0];
@@ -44,13 +44,13 @@ function dateParse(str,format) {
             case 'S':
                 date.setMilliseconds(parsed);
                 break;
-           // default:
+            // default:
 
         }
-       
+
     }
     return date;
 }
 
-export default dateParse;
+
 
